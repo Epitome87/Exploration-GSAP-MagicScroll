@@ -8,40 +8,263 @@
 
 :root {
   /* Light Mode */
-  --clr-text-light: hsl(278, 80%, 5%);
+  --clr-text-light: hsl(240, 4%, 5%);
+  --clr-text-secondary-dark: hsl(0, 0%, 70%);
   --clr-background-light: hsl(0, 0%, 100%);
+  --clr-span1-light: hsl(16, 97%, 53%);
+  --clr-span2-light: hsl(212, 80%, 57%);
+  --clr-span3-light: hsl(146, 100%, 67%);
 
   /* Dark Mode */
   --clr-text-dark: hsl(0, 0%, 100%);
-  --clr-background-dark: hsl(278, 80%, 10%);
+  --clr-text-secondary-dark: hsl(0, 0%, 70%);
+  --clr-background-dark: hsl(240, 4%, 5%);
+  --clr-span1-dark: hsl(16, 97%, 53%);
+  --clr-span2-dark: hsl(212, 80%, 57%);
+  --clr-span3-dark: hsl(146, 100%, 67%);
 }
+
+/* Doing this gives a kinda cool staggered theme-swap effect! */
+/* * {
+  transition: all 300ms ease-in-out;
+} */
 
 body {
   color: var(--clr-text);
   background-color: var(--clr-background);
+
+  /* Ensure our animated divs don't cause a horizontal scrollbar */
+  /* TODO: Find a way to animate without using divs to hide content */
+  overflow-x: hidden;
+}
+
+.theme-btn {
+  font: inherit;
+  padding: 0.5rem 1.5rem;
+  border-radius: 25px;
+  color: var(--clr-text);
+  background-color: var(--clr-background);
+  border: 2px solid var(--clr-text);
+}
+
+#logo {
+}
+
+.nav-header {
+  min-height: 10vh;
+  width: 80%;
+  margin: auto;
+  padding: 2rem 0;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--clr-text);
+}
+
+.line1,
+.line2,
+.line3 {
+  width: 3rem;
+  height: 0.2rem;
+  margin: 0.4rem;
+  background-color: var(--clr-text);
+  pointer-events: none;
+}
+
+.slide {
+  min-height: 100vh;
+  margin: 0 auto;
+  width: 80%;
+  display: flex;
+  gap: 3rem;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--clr-text);
+  background-color: var(--clr-background);
+
+  /* This makes each slide look like its falling when being scaled -- kinda cool! */
+  transform-origin: 50% 100%;
+}
+
+.hero-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  flex-basis: 25rem;
+  position: relative;
+
+  clip-path: inset(0 99% 0 0);
+}
+
+.hero-description p {
+  padding: 3rem 0;
+  font-size: 1.5rem;
+  color: var(--clr-text-secondary);
+}
+
+.hero-image {
+  position: relative;
+  flex: 1;
+  flex-basis: 25rem;
+  overflow: hidden;
+  max-height: 60vh;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.section1-span {
+  color: var(--clr-span1);
+}
+
+.section2-span {
+  color: var(--clr-span2);
+}
+
+.section3-span {
+  color: var(--clr-span3);
+}
+
+.hero-description h2 {
+  font-family: 'sans-serif';
+  font-size: 5rem;
+}
+
+.active {
+  color: blue !important;
+}
+
+.cta {
+  font: inherit;
+  padding: 1rem 2rem;
+  background: none;
+  border: 1px solid var(--clr-text);
+  color: var(--clr-text);
+  font-size: 1rem;
+  text-decoration: none;
+  align-self: flex-start;
+  cursor: pointer;
+}
+
+.cta:hover {
+  color: var(--clr-background);
+  background-color: var(--clr-text);
+}
+
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: pink;
+  /* var(--clr-background); */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1;
+  opacity: 1;
+  /* Position this circular clip just slightly off the top-right screeb */
+  clip-path: circle(50px at 100% -10%);
+  -webkit-clip-path: circle(50px at 100% -10%);
+}
+
+.nav-hamburger {
+  cursor: pointer;
+}
+
+.nav-links {
+  font-size: 3rem;
+  flex-basis: 30rem;
+}
+
+.nav-links h3 {
+  padding: 3rem 0;
+}
+
+.contact {
+  flex-basis: 30rem;
+}
+
+.contact h2 {
+  font-size: 3rem;
+  padding: 2rem 0;
+}
+
+.contact p {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+/* Positioned relative section-description and section-img for each section */
+.reveal-image,
+.reveal-text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  /* Must match the background -- we're essentially hiding what's underneath here */
+  background-color: var(--clr-background);
+  left: 0;
+  top: 0;
+}
+
+.cursor {
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid var(--clr-text);
+  border-radius: 50%;
+  /* Necessary to animate the left and top properties in JavaScript */
+  position: absolute;
+}
+
+/* Prevent Pin Spacer from blocking user input */
+.scrollmagic-pin-spacer {
+  position: static !important;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --clr-text: var(--clr-text-dark);
+    --clr-text-secondary: var(--clr-text-secondary-dark);
     --clr-background: var(--clr-background-dark);
+    --clr-span1: var(--clr-span1-dark);
+    --clr-span2: var(--clr-span2-dark);
+    --clr-span3: var(--clr-span3-dark);
   }
 }
 
 [color-scheme='dark'] {
   --clr-text: var(--clr-text-dark);
+  --clr-text-secondary: var(--clr-text-secondary-dark);
   --clr-background: var(--clr-background-dark);
+  --clr-span1: var(--clr-span1-dark);
+  --clr-span2: var(--clr-span2-dark);
+  --clr-span3: var(--clr-span3-dark);
 }
 
 /* Probably don't need both of these queries, but just to be safe! */
 @media (prefers-color-scheme: light) {
   :root {
     --clr-text: var(--clr-text-light);
+    --clr-text-secondary: var(--clr-text-secondary-light);
     --clr-background: var(--clr-background-light);
+    --clr-span1: var(--clr-span1-light);
+    --clr-span2: var(--clr-span2-light);
+    --clr-span3: var(--clr-span3-light);
   }
 }
 
 [color-scheme='light'] {
   --clr-text: var(--clr-text-light);
+  --clr-text-secondary: var(--clr-text-secondary-light);
   --clr-background: var(--clr-background-light);
+  --clr-span1: var(--clr-span1-light);
+  --clr-span2: var(--clr-span2-light);
+  --clr-span3: var(--clr-span3-light);
 }

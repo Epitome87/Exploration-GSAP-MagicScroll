@@ -4,12 +4,38 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- For ScrollMagic Use -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"
+      integrity="sha512-8E3KZoPoZCD+1dgfqhPbejQBnQfBXe8FuwL4z/c8sTrgeDMFEnoyTlH3obB4/fV+6Sg0a0XF+L/6xS4Xx1fUEg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/plugins/debug.addIndicators.min.js"
+      integrity="sha512-RvUydNGlqYJapy0t4AH8hDv/It+zKsv4wOQGb+iOnEfa6NnF2fzjXgRy+FDjSpMfC3sjokNUzsfYZaZ8QAwIxg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/plugins/animation.gsap.min.js"
+      integrity="sha512-5/OHwmQzDSBS0Ous4/hlYoWLHd06/d2r7LdKZQVBXOA6PvOqWVXtdboiLTU7lQTGyVoKVTNkwi0ol4gHGlw5ww=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- GSAP -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.2/gsap.min.js"
+      integrity="sha512-kVlGhj2qFy+KBCFuvjBJTGUMxbdqJKs4yK2jh0e0VPhWUPiPC87bzm4THmaaIee3Oj7j6sDpTTgm2EPPiESqBg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <link rel="stylesheet" href="styles.css" />
     <title>Minimalistic Exploration</title>
   </head>
   <body>
     <header class="nav-header">
-      <h1><a href="./index.html"></a>Logo.</h1>
+      <h1><a href="./index.html" id="logo"></a>Logo.</h1>
       <button class="theme-btn">Theme</button>
       <!-- Hamburger menu -->
       <div class="nav-hamburger">
@@ -23,10 +49,6 @@
     <main>
       <!-- Section 1 -->
       <section class="section1 slide">
-        <div class="hero-img">
-          <img src="" alt="" />
-          <div class="reveal-image"></div>
-        </div>
         <div class="hero-description">
           <div class="title">
             <h2>Lorem ipsum dolor <span class="section1-span">sit.</span></h2>
@@ -38,15 +60,25 @@
             magnam. Voluptatum, labore. Eius.
           </p>
           <a class="cta section1-cta">Call-to-action</a>
-          <div class="reveal-text"></div>
+          <!-- <div class="reveal-text"></div> -->
+        </div>
+        <div class="hero-image">
+          <img
+            src="https://source.unsplash.com/random/500×500/?nature"
+            alt=""
+          />
+          <!-- <div class="reveal-image"></div> -->
         </div>
       </section>
 
       <!-- Section 2 -->
       <section class="section2 slide">
-        <div class="hero-img">
-          <img src="" alt="" />
-          <div class="reveal-image"></div>
+        <div class="hero-image">
+          <img
+            src="https://source.unsplash.com/random/500x500/?nature"
+            alt=""
+          />
+          <!-- <div class="reveal-image"></div> -->
         </div>
         <div class="hero-description">
           <div class="title">
@@ -61,16 +93,12 @@
             doloremque.
           </p>
           <a class="cta section2-cta">Call-to-action</a>
-          <div class="reveal-text"></div>
+          <!-- <div class="reveal-text"></div> -->
         </div>
       </section>
 
       <!-- Section 3 -->
       <section class="section3 slide">
-        <div class="hero-img">
-          <img src="" alt="" />
-          <div class="reveal-image"></div>
-        </div>
         <div class="hero-description">
           <div class="title">
             <h2>
@@ -85,7 +113,14 @@
             laboriosam laborum?
           </p>
           <a class="cta section3-cta">Call-to-action</a>
-          <div class="reveal-text"></div>
+          <!-- <div class="reveal-text"></div> -->
+        </div>
+        <div class="hero-image">
+          <img
+            src="https://source.unsplash.com/random/500×500/?nature"
+            alt=""
+          />
+          <!-- <div class="reveal-image"></div> -->
         </div>
       </section>
     </main>
