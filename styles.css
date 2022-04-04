@@ -1,0 +1,47 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Light Mode */
+  --clr-text-light: hsl(278, 80%, 5%);
+  --clr-background-light: hsl(0, 0%, 100%);
+
+  /* Dark Mode */
+  --clr-text-dark: hsl(0, 0%, 100%);
+  --clr-background-dark: hsl(278, 80%, 10%);
+}
+
+body {
+  color: var(--clr-text);
+  background-color: var(--clr-background);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --clr-text: var(--clr-text-dark);
+    --clr-background: var(--clr-background-dark);
+  }
+}
+
+[color-scheme='dark'] {
+  --clr-text: var(--clr-text-dark);
+  --clr-background: var(--clr-background-dark);
+}
+
+/* Probably don't need both of these queries, but just to be safe! */
+@media (prefers-color-scheme: light) {
+  :root {
+    --clr-text: var(--clr-text-light);
+    --clr-background: var(--clr-background-light);
+  }
+}
+
+[color-scheme='light'] {
+  --clr-text: var(--clr-text-light);
+  --clr-background: var(--clr-background-light);
+}
