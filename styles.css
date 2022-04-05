@@ -4,10 +4,12 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  /* cursor: none; */
 }
 
 :root {
   /* Light Mode */
+  --blend-mode-light: lighten;
   --clr-text-light: hsl(240, 4%, 5%);
   --clr-text-secondary-dark: hsl(0, 0%, 70%);
   --clr-background-light: hsl(0, 0%, 100%);
@@ -16,6 +18,7 @@
   --clr-span3-light: hsl(146, 100%, 67%);
 
   /* Dark Mode */
+  --blend-mode-dark: darken;
   --clr-text-dark: hsl(0, 0%, 100%);
   --clr-text-secondary-dark: hsl(0, 0%, 70%);
   --clr-background-dark: hsl(240, 4%, 5%);
@@ -45,9 +48,11 @@ body {
   color: var(--clr-text);
   background-color: var(--clr-background);
   border: 2px solid var(--clr-text);
+  cursor: pointer;
 }
 
 #logo {
+  color: var(--clr-text);
 }
 
 .nav-header {
@@ -60,6 +65,9 @@ body {
   align-items: center;
   justify-content: space-between;
   color: var(--clr-text);
+  /* Set a non-static position so we create new stacking context */
+  position: relative;
+  z-index: 2;
 }
 
 .line1,
@@ -163,12 +171,12 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: pink;
+  background-color: #ff6a00;
   /* var(--clr-background); */
   display: flex;
   justify-content: space-around;
   align-items: center;
-  z-index: 1;
+  /* z-index: 1; */
   opacity: 1;
   /* Position this circular clip just slightly off the top-right screeb */
   clip-path: circle(50px at 100% -10%);
@@ -177,6 +185,11 @@ body {
 
 .nav-hamburger {
   cursor: pointer;
+  position: relative;
+}
+
+.nav-hamburger.active {
+  z-index: 100;
 }
 
 .nav-links {
@@ -212,6 +225,12 @@ body {
   background-color: var(--clr-background);
   left: 0;
   top: 0;
+
+  transform: translateX(100%);
+}
+
+body.hide {
+  overflow: hidden;
 }
 
 .cursor {
@@ -221,6 +240,73 @@ body {
   border-radius: 50%;
   /* Necessary to animate the left and top properties in JavaScript */
   position: absolute;
+
+  /* We set position in JS on top-left of mouse -- adjust it here to be centered */
+  transform: translate(-50%, -50%);
+
+  /* Can't click through things with this cursor in the way! */
+  pointer-events: none;
+
+  transition: 0.5s ease-in-out;
+  transition-property: background, transform;
+  transform-origin: 75% 75%;
+}
+
+.cursor-text {
+  /* Center the text inside the custom cursor */
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 0.5rem;
+  transform: translate(-50%, -50%);
+}
+
+.cursor.nav-active {
+  color: var(--clr-text);
+  background-color: rgba(86, 124, 228, 0.9);
+  transform: scale(2);
+}
+
+.cursor.cta-active {
+  color: var(--clr-text);
+  background: var(--clr-background);
+  transform: scale(2);
+}
+
+.title {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--clr-background);
+}
+
+.title-swipe {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  /* Had trouble blending this */
+  /* Solution: Blend mode is on child (here) */
+  /* And we give the parent (title) a background, otherwise there's nothing to blend with I guess?! */
+  /* mix-blend-mode: darken; */
+  /* We need darken if background is dark */
+  /* We need lighten if it is light */
+  /* So how do we conditionally determine this?!  */
+  mix-blend-mode: var(--blend-mode);
+  transform: translateY(100%);
+}
+
+.title-swipe-1 {
+  background-color: var(--clr-span1);
+}
+
+.title-swipe-2 {
+  background-color: var(--clr-span2);
+}
+
+.title-swipe-3 {
+  background-color: var(--clr-span3);
 }
 
 /* Prevent Pin Spacer from blocking user input */
@@ -228,8 +314,24 @@ body {
   position: static !important;
 }
 
+/* Custom Scrollbar */
+body::-webkit-scrollbar {
+  width: inherit;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: var(--clr-background);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--clr-text);
+  opacity: 0.5;
+  /* border-radius: 10px; */
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
+    --blend-mode: var(--blend-mode-dark);
     --clr-text: var(--clr-text-dark);
     --clr-text-secondary: var(--clr-text-secondary-dark);
     --clr-background: var(--clr-background-dark);
@@ -240,6 +342,7 @@ body {
 }
 
 [color-scheme='dark'] {
+  --blend-mode: var(--blend-mode-dark);
   --clr-text: var(--clr-text-dark);
   --clr-text-secondary: var(--clr-text-secondary-dark);
   --clr-background: var(--clr-background-dark);
@@ -251,6 +354,7 @@ body {
 /* Probably don't need both of these queries, but just to be safe! */
 @media (prefers-color-scheme: light) {
   :root {
+    --blend-mode: var(--blend-mode-light);
     --clr-text: var(--clr-text-light);
     --clr-text-secondary: var(--clr-text-secondary-light);
     --clr-background: var(--clr-background-light);
@@ -261,6 +365,7 @@ body {
 }
 
 [color-scheme='light'] {
+  --blend-mode: var(--blend-mode-light);
   --clr-text: var(--clr-text-light);
   --clr-text-secondary: var(--clr-text-secondary-light);
   --clr-background: var(--clr-background-light);

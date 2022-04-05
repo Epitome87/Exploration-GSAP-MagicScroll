@@ -133,7 +133,7 @@ function animateSlides() {
       reverse: false, // Don't let it disappear
     })
       .setTween(slideTimeline)
-      .addIndicators({ name: `Slide ${i + 1}` })
+      //   .addIndicators({ name: `Slide ${i + 1}` })
       .addTo(controller);
 
     // Animate the second section
@@ -159,7 +159,7 @@ function animateSlides() {
       duration: '50%', // 100% = last whole height of the Slide
       triggerHook: 0,
     })
-      .addIndicators({ name: 'Page', indent: 200 })
+      //   .addIndicators({ name: 'Page', indent: 200 })
       .setPin(slide, { pushFollowers: false })
       .setTween(pageTimeline)
       .addTo(controller);
@@ -171,18 +171,95 @@ animateSlides();
 const navHamburger = document.querySelector('.nav-hamburger');
 const navScreen = document.querySelector('.nav-bar');
 
-navHamburger.addEventListener('click', () => {
-  const navbarTimeline = gsap.timeline({
-    defaults: { duration: 1, ease: 'power2.inOut' },
-  });
+navHamburger.addEventListener('click', (event) => {
+  //   const navbarTimeline = gsap.timeline({
+  //     defaults: { duration: 1, ease: 'power2.inOut' },
+  //   });
 
-  navbarTimeline.fromTo(
-    navScreen,
-    1,
-    { clipPath: 'circle(50px at 100% -10%)' },
-    { clipPath: 'circle(100% at 50% 50%)' }
-  );
+  if (!event.target.classList.contains('active')) {
+    event.target.classList.add('active');
+    gsap.to('.line1', 0.5, {
+      rotate: '45deg',
+      y: 10,
+    });
+    gsap.to('.line3', 0.5, {
+      rotate: '-45deg',
+      y: -10,
+    });
+    gsap.to('.line2', 0.2, { opacity: 0 });
+    gsap.to('#logo', 1, { color: 'black ' });
+    gsap.fromTo(
+      '.nav-bar',
+      1,
+      { clipPath: 'circle(50px at 100% -10%)' },
+      { clipPath: 'circle(100% at 50% 50%)' }
+    );
+
+    document.body.classList.add('hide');
+  } else {
+    event.target.classList.remove('active');
+    gsap.to('.line1', 0.5, {
+      rotate: '0',
+      y: 0,
+    });
+    gsap.to('.line2', 0.5, { opacity: 1 });
+    gsap.to('.line3', 0.5, {
+      rotate: '0',
+      y: 0,
+    });
+    gsap.to('#logo', 1, { color: 'white ' });
+    gsap.to('.nav-bar', 1, { clipPath: 'circle(50px at 100% -10%)' });
+
+    document.body.classList.remove('hide');
+  }
+
+  //   navbarTimeline.fromTo(
+  //     navScreen,
+  //     1,
+  //     { clipPath: 'circle(50px at 100% -10%)' },
+  //     { clipPath: 'circle(100% at 50% 50%)' }
+  //   );
 });
+
+const mouse = document.querySelector('.cursor');
+const mouseText = mouse.querySelector('span');
+
+function cursor(event) {
+  mouse.style.top = event.pageY + 'px';
+  mouse.style.left = event.pageX + 'px';
+}
+
+function activeCursor(event) {
+  const activeElement = event.target;
+
+  if (
+    activeElement.id === 'logo' ||
+    activeElement.classList.contains('nav-hamburger')
+  ) {
+    mouse.classList.add('nav-active');
+    mouseText.innerText = 'Fancy!';
+  } else {
+    mouse.classList.remove('nav-active');
+    mouseText.innerText = '';
+  }
+
+  if (mouseText.innerText) return;
+
+  if (activeElement.classList.contains('cta')) {
+    mouse.classList.add('cta-active');
+    mouseText.innerText = 'Click Me!';
+    gsap.to('.title-swipe', 1, { y: '0%' });
+  } else {
+    activeElement.classList.contains('cta');
+    mouse.classList.remove('cta-active');
+    gsap.to('.title-swipe', 1, { y: '100%' });
+    mouseText.innerText = '';
+  }
+}
+
+window.addEventListener('mousemove', cursor);
+window.addEventListener('mouseover', activeCursor);
+
 // const testScene = new ScrollMagic.Scene({
 //   triggerElement: '.section1',
 //   triggerHook: 0.5,
